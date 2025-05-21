@@ -25,6 +25,6 @@ export class AuthController {
       maxAge: 60 * 60 * 1000,
     });
 
-    res.redirect('http://localhost:5173/select-page');
+    res.redirect(process.env.REDIRECT_URL!);
   }
 }
