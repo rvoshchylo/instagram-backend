@@ -86,7 +86,14 @@ This workflow is not yet implemented in this version of the app, but is planned 
    If you don't already have a Facebook Page, create one here:  
    👉 [Create Facebook Page](https://www.facebook.com/pages/create)
 
-3. **Create or Switch to a Business/Creator Instagram Account**
+   You can also connect your Instagram account to your Facebook Page directly from the [Meta Business Suite](https://business.facebook.com/). Once your page is created:
+     1. Go to **Settings**.
+     2. Navigate to **Linked Accounts**.
+     3. Connect your Instagram account.
+    
+     This is also where you can find and copy your Facebook Page ID needed to use the application.
+
+4. **Create or Switch to a Business/Creator Instagram Account**
 
    Your Instagram account must be either a **Business** or **Creator** type.  
    To switch your personal account:
@@ -95,14 +102,14 @@ This workflow is not yet implemented in this version of the app, but is planned 
    - Tap **Switch to Professional Account**
    - Choose **Business** or **Creator**
 
-4. **Connect Instagram Account to Facebook Page**
+5. **Connect Instagram Account to Facebook Page**
 
    - Go to your Facebook Page
    - Open **Settings > Linked Accounts > Instagram**
    - Log in to your Instagram account and connect it to the page
    - Make sure the connection is **active and visible**
 
-5. **Login and Manage Posts**
+6. **Login and Manage Posts**
 
    Once the above setup is complete:
    - Log in via Facebook on the app
