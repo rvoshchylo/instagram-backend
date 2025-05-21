@@ -1,99 +1,137 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Instagram Content Manager
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This application allows authenticated users to see their Instagram posts linked to a Facebook Page and post new ones through the Meta Graph API. It is designed for users with a **Business** or **Creator** Instagram account connected to a Facebook Page.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## ✨ Features
 
-## Description
+- **Facebook Authentication** – Log in via your Facebook account.
+- **Page Selection** – Input your Facebook Page ID to load linked Instagram data.
+- **Post Viewer** – Browse all Instagram posts, including images and videos.
+- **Post Details** – View post metadata like:
+  - Caption with hashtag and mention support
+  - Number of likes
+  - Number of comments
+  - Comments list with timestamps
+  - Post publish date
+- **Post Creation** – Publish a new Instagram photo post by providing a **public image URL** and an optional caption.
+- **Responsive Design** – Works smoothly on mobile and desktop devices.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📌 Requirements
 
-## Project setup
+- Instagram account must be either **Business** or **Creator**
+- Instagram must be connected to a Facebook Page
+- Facebook App must have the following permissions:
+  - `instagram_basic`
+  - `pages_show_list`
+  - `pages_read_engagement`
+  - `pages_read_user_content`
+  - `instagram_manage_insights`
+  - `instagram_content_publish` (requires app review for production)
 
-```bash
-$ npm install
-```
+## 🧠 Tech Stack
 
-## Compile and run the project
+- **Frontend**: React, Vite, TailwindCSS, React Router, TanStack Query
+- **Backend**: NestJS, Axios, Facebook Graph API
+- **Auth**: Facebook OAuth with token exchange and secure storage
+- **State & Data**: TanStack Query
 
-```bash
-# development
-$ npm run start
+## 📷 Post Creation Notes
 
-# watch mode
-$ npm run start:dev
+The app uses a two-step process to create posts:
 
-# production mode
-$ npm run start:prod
-```
+1. A media container is created using a **public image URL**.
+2. The post is then published using the media container ID.
 
-## Run tests
+> ⚠️ Only public URLs are supported. Upload functionality is not available in this version.
 
-```bash
-# unit tests
-$ npm run test
+## 📝 Creating a Post
 
-# e2e tests
-$ npm run test:e2e
+To publish a post to Instagram from this app, you need to provide:
 
-# test coverage
-$ npm run test:cov
-```
+- A **public image URL** (e.g. `https://example.com/image.jpg`)
+- An optional **caption**
 
-## Deployment
+### ⚠️ Why only a public image URL?
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+The Instagram Graph API requires media to be **hosted on a publicly accessible server**. This means the image must be available via a direct link (no authentication, no tokens, no private access). The API **does not** accept base64 images or file uploads from the client.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+At the moment, this application does **not** include an image upload mechanism. That’s why you must provide a public URL yourself.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+### 🛠️ Future improvement
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+A possible enhancement would be to:
 
-## Resources
+1. Upload the image to a storage backend (e.g. AWS S3, Firebase, or a custom CDN),
+2. Get the public URL of the uploaded image,
+3. Use that URL to create the Instagram post automatically.
 
-Check out a few resources that may come in handy when working with NestJS:
+This workflow is not yet implemented in this version of the app, but is planned for the future.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 🚧 Limitations
 
-## Support
+- App is currently designed for development/testing with test users and does not request advanced permissions from Meta.
+- Publishing video content is not implemented.
+- Error messages for failed Graph API calls may require debugging in DevTools.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📎 Usage
 
-## Stay in touch
+1. **Request Developer Access**
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+   Before you can use the app, you must request test access to the connected Facebook App.  
+   Please send your **Facebook email or username** to the developer so they can add you as a test user for the app.  
+   This is required in order to pass the Facebook OAuth and access the Graph API.
 
-## License
+2. **Create a Facebook Page**
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-# instagram-backend
+   If you don't already have a Facebook Page, create one here:  
+   👉 [Create Facebook Page](https://www.facebook.com/pages/create)
+
+   You can also connect your Instagram account to your Facebook Page directly from the [Meta Business Suite](https://business.facebook.com/). Once your page is created:
+     1. Go to **Settings**.
+     2. Navigate to **Linked Accounts**.
+     3. Connect your Instagram account.
+    
+     This is also where you can find and copy your Facebook Page ID needed to use the application.
+
+4. **Create or Switch to a Business/Creator Instagram Account**
+
+   Your Instagram account must be either a **Business** or **Creator** type.  
+   To switch your personal account:
+   - Go to your Instagram app
+   - Open **Settings > Account**
+   - Tap **Switch to Professional Account**
+   - Choose **Business** or **Creator**
+
+5. **Connect Instagram Account to Facebook Page**
+
+   - Go to your Facebook Page
+   - Open **Settings > Linked Accounts > Instagram**
+   - Log in to your Instagram account and connect it to the page
+   - Make sure the connection is **active and visible**
+
+6. **Login and Manage Posts**
+
+   Once the above setup is complete:
+   - Log in via Facebook on the app
+   - Enter the **Facebook Page ID** (you can find it in your Page settings)
+     ![You will find an ID here](https://github.com/user-attachments/assets/c5514579-1d1e-46cc-a807-f6efe630acd4)
+
+
+
+       ⚠️ **Why do you need to manually enter the Page ID?**  
+       Due to a known issue with the Facebook Graph API, once you connect an Instagram Business or Creator account to a Facebook Page, that Page may no longer appear in the list of accessible pages returned by the API.
+      
+       For example, suppose you have 5 pages: `A, B, C, D, E`.  
+       Once you connect your Instagram account to page **A**, it disappears from the list of pages returned by the `/me/accounts` Graph API endpoint.  
+       If you then disconnect and connect it to page **B**, page **B** also disappears.
+      
+       This appears to be an inconsistency or bug on Facebook's side and has been confirmed through repeated testing.
+      
+       ✅ As a workaround, this app allows you to manually input the **Page ID**, which ensures you can still retrieve and interact with your connected Instagram account even if the Page is no longer listed via the API.
+      
+       The rest of the Instagram Graph API functions (fetching posts, creating posts, viewing insights, etc.) continue to work as expected once the Page ID is known.
+     
+   - Start managing your Instagram content:
+     - Browse existing posts
+     - View full post details
+     - Create new posts with a public image URL and caption
