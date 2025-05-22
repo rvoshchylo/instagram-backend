@@ -18,13 +18,9 @@ export class AuthController {
       email?: string;
     };
 
-    res.cookie('fb_token', user.accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 60 * 60 * 1000,
-    });
+    const redirectUrl = new URL(process.env.REDIRECT_URL!);
+    redirectUrl.searchParams.set('token', user.accessToken);
 
-    res.redirect(process.env.REDIRECT_URL!);
+    return res.redirect(redirectUrl.toString());
   }
 }
