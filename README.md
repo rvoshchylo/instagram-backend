@@ -13,7 +13,7 @@ This application allows authenticated users to see their Instagram posts linked 
   - Number of comments
   - Comments list with timestamps
   - Post publish date
-- **Post Creation** – Publish a new Instagram photo post by providing a **public image URL** and an optional caption.
+- **Post Creation** – Publish a new Instagram photo post by uploading a photo and an optional caption.
 - **Responsive Design** – Works smoothly on mobile and desktop devices.
 
 ## 📌 Requirements
@@ -39,33 +39,15 @@ This application allows authenticated users to see their Instagram posts linked 
 
 The app uses a two-step process to create posts:
 
-1. A media container is created using a **public image URL**.
+1. A media container is created as a file uploader.
 2. The post is then published using the media container ID.
-
-> ⚠️ Only public URLs are supported. Upload functionality is not available in this version.
 
 ## 📝 Creating a Post
 
 To publish a post to Instagram from this app, you need to provide:
 
-- A **public image URL** (e.g. `https://example.com/image.jpg`)
+- **Upload** your photo
 - An optional **caption**
-
-### ⚠️ Why only a public image URL?
-
-The Instagram Graph API requires media to be **hosted on a publicly accessible server**. This means the image must be available via a direct link (no authentication, no tokens, no private access). The API **does not** accept base64 images or file uploads from the client.
-
-At the moment, this application does **not** include an image upload mechanism. That’s why you must provide a public URL yourself.
-
-### 🛠️ Future improvement
-
-A possible enhancement would be to:
-
-1. Upload the image to a storage backend (e.g. AWS S3, Firebase, or a custom CDN),
-2. Get the public URL of the uploaded image,
-3. Use that URL to create the Instagram post automatically.
-
-This workflow is not yet implemented in this version of the app, but is planned for the future.
 
 ## 🚧 Limitations
 
@@ -134,4 +116,25 @@ This workflow is not yet implemented in this version of the app, but is planned 
    - Start managing your Instagram content:
      - Browse existing posts
      - View full post details
-     - Create new posts with a public image URL and caption
+     - Create new posts with an uploaded photo and caption
+
+## ✅ Final Checklist
+
+Before using or sharing the app, make sure you've completed the following:
+
+- [x] You’ve been **added as a test user** in the Meta Developer Console (and accepted the invite).
+- [x] You have a **Facebook Page** with a connected **Instagram Business/Creator account**.
+- [x] You’ve copied your **Facebook Page ID** from [Meta Business Suite](https://business.facebook.com/).
+- [x] You’re using the app **as a test user** – no app review is required for this.
+
+---
+
+## 🔐 Environment Variables (Backend)
+
+Ensure the following environment variables are set for the backend to function correctly:
+
+```env
+FACEBOOK_APP_ID=your_facebook_app_id
+FACEBOOK_APP_SECRET=your_facebook_app_secret
+FB_CALLBACK_URL=https://your-app.com/auth/instagram/callback
+UPLOAD_URL=https://your-app.com/uploads/
