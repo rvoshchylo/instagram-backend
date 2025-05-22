@@ -1,12 +1,26 @@
-import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { InstagramService } from './instagram.service';
 import { RequestWithFbToken } from 'src/types/RequestWithFbToken';
 import { CreateInstagramPostDto } from './dto/create-instagram-post.dto';
+import { UploadImageInterceptor } from 'src/common/interseptors/file.interceptor';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('instagram')
 export class InstagramController {
-  constructor(private readonly instagramService: InstagramService) {}
+  constructor(
+    private readonly instagramService: InstagramService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Get('profile')
   async getProfile(
@@ -29,5 +43,13 @@ export class InstagramController {
       userId,
       token: req.fbToken,
     });
+  }
+
+  @Post('upload')
+  @UseInterceptors(UploadImageInterceptor())
+  uploadImage(@UploadedFile() file: Express.Multer.File) {
+    return {
+      url: this.configService.getOrThrow<string>('UPLOAD_URL') + file.filename,
+    };
   }
 }
